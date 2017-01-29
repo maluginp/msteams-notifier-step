@@ -17,12 +17,11 @@ module MSTeamsStep
     end
 
     def title
-      "#{env.build_title}"
+      "#{env.build_title} #{build_verb}"
     end  
 
     def text
-      '*Build  #{build_verb}: [##{env.build_number}](##{env.git_commit} by #{env.git_author} on #{env.git_branch})*<br/>'\
-      '**Commit message:**\n #{env.git_message}'
+      "*Build ##{env.build_number} ([Commit #{env.git_commit}](#{env.gitlab_internal_url}) by #{env.git_author} on #{env.git_branch})*<br/>**Commit message:**<br/>#{env.git_message}<br/>**Issues:**<br/>#{issues}"
     end
 
     def build_url
@@ -44,19 +43,12 @@ module MSTeamsStep
     end
 
     def actions
-      acts = []
-
-      acts << field_build_page
-      acts << field_gitlab_page
-
-      env.git_message.scan(/\#[a-zA-Z0-9\-]+/) { |match| acts << {
-        '@context' => 'https://schema.org',
-        '@type' => 'ViewAction',
-        name: 'Open issue: #{match}',
-        target: ["#{env.youtrack_url}#{match[1..-1]}"]
-      }}
-
-      acts
+      [{
+          '@context' => 'https://schema.org',
+          '@type' => 'ViewAction',
+          name: 'Show build page',
+          target: [env.build_url]
+      }]
     end
 
     private
@@ -67,24 +59,14 @@ module MSTeamsStep
       env.build_successful? ? "succeeded" : "failed"
     end
 
-    
+    def issues
+      str = ""
+      env.git_message.scan(/\#[a-zA-Z0-9\-]+/) { |match| str << "[Issue #{match}](#{env.youtrack_url}#{match[1..-1]})<br/>" }
+      if str == ""
+        str = "Issues not found"
+      end
 
-    def field_gitlab_page
-      {
-        '@context' => 'https://schema.org',
-        '@type' => 'ViewAction',
-        name: 'Show commit in Gitlab',
-        target: [env.gitlab_internal_url]
-      }
-    end
-
-    def field_build_page
-      {
-          '@context' => 'https://schema.org',
-          '@type' => 'ViewAction',
-          name: 'Show build page',
-          target: [env.build_url]
-      }
+      str
     end
 
 

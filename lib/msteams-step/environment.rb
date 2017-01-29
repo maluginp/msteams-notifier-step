@@ -53,11 +53,12 @@ module MSTeamsStep
     end
 
     def youtrack_url
-      nenv.youtrack_url
+      ENV["youtrack_url"] || nenv.msteams_youtrack_url
     end
 
     def gitlab_internal_url
-      "#{nenv.gitlab_url}#{git_commit_full}"
+      url = ENV["gitlab_url"] || nenv.msteams_gitlab_url
+      "#{url}#{git_commit_full}"
     end
         
     def msteams_username
