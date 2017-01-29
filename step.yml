@@ -1,0 +1,28 @@
+#
+#  step.yml
+#
+#  Copyright (c) 2016 Netguru Sp. z o.o. All rights reserved.
+#
+# Modified for Microsoft teams by Platon Malyugin
+
+# Identification
+
+title: Microsoft teams notifier
+summary: Sends a Microsoft Teams message on success or failure.
+website: https://github.com/netguru/bitrise-step-slack
+
+# Script characteristics
+
+is_requires_admin_user: false
+is_always_run: true
+is_skippable: true
+
+# Inputs
+
+inputs:
+  - webhook_url: $MSTEAMS_WEBHOOK_URL
+    opts:
+      title: Webhook URL
+      summary: The Microsoft Teams webhook URL to post the message to.
+      is_expand: true
+      is_required: true
