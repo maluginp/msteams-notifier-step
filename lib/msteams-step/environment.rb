@@ -21,7 +21,7 @@ module MSTeamsStep
     end
 
     def build_url
-      nenv.bitrise_build_url
+      nenv.bitrise_public_install_page_url
     end
 
     def build_successful?

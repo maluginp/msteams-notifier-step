@@ -21,7 +21,7 @@ module MSTeamsStep
     end  
 
     def text
-      "*Build #{build_verb}: [##{env.build_number}](#{env.git_commit} by #{env.git_author} on #{env.git_branch})*"
+      "*Build  #{build_verb}: [##{env.build_number}](##{env.git_commit} by #{env.git_author} on #{env.git_branch})*  **Commit message:**  #{env.git_message}"
     end
 
     def build_url
@@ -29,7 +29,7 @@ module MSTeamsStep
     end
 
     def border_color
-      @env.build_successful? ? "008000" : "EA4300"
+      env.build_successful? ? "008000" : "EA4300"
     end
 
     def

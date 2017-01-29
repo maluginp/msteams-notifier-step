@@ -23,7 +23,7 @@ module MSTeamsStep
           potentialAction: [{
               '@context' => 'https://schema.org',
               '@type' => 'ViewAction',
-              name: 'Open build page',
+              name: 'Show build page',
               target: [message.build_url]
           }]
         }), 
