@@ -21,7 +21,7 @@ module MSTeamsStep
     end  
 
     def text
-      "*Build ##{env.build_number} ([Commit #{env.git_commit}](#{env.gitlab_internal_url}) by #{env.git_author} on #{env.git_branch})*<br/>**Commit message:**<br/>#{env.git_message}<br/>**Issues:**<br/>#{issues}"
+      "*Build ##{env.build_number} (Commit [#{env.git_commit}](#{env.gitlab_internal_url}) by #{env.git_author} on #{env.git_branch})*<br/>**Commit message:**<br/>#{env.git_message}<br/>**Issues:**<br/>#{issues}"
     end
 
     def build_url
