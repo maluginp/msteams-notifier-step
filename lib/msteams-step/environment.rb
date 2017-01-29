@@ -32,6 +32,10 @@ module MSTeamsStep
       nenv.git_clone_commit_hash[0...7]
     end
 
+    def git_commit_full
+      nenv.git_clone_commit_hash
+    end
+
     def git_message
       nenv.git_clone_commit_message_subject
     end
@@ -44,29 +48,18 @@ module MSTeamsStep
       nenv.bitrise_git_branch
     end
 
-    def jira_domain
-      nenv.jira_domain
-    end
-
-    def jira_project_key
-      nenv.jira_project_key
-    end
-
-    def jira_task
-      comp_groups = git_branch.split("/").last.split("-").each_cons(2).to_a
-      return nil if comp_groups.empty?
-      comp_groups.each do |comps|
-        if comps[0].downcase == jira_project_key.downcase && comps[1].is_numeric?
-          return "#{comps[0]}-#{comps[1]}".upcase
-        end
-      end
-      return nil
-    end
-
     def msteams_webhook_url
       ENV["webhook_url"] || nenv.msteams_webhook_url
     end
 
+    def youtrack_url
+      nenv.youtrack_url
+    end
+
+    def gitlab_internal_url
+      "#{nenv.gitlab_url}#{git_commit_full}"
+    end
+        
     def msteams_username
       "Bitrise"
     end

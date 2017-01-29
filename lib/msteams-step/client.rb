@@ -20,12 +20,7 @@ module MSTeamsStep
           title: message.title,
           text: message.text,
           themeColor: message.border_color,
-          potentialAction: [{
-              '@context' => 'https://schema.org',
-              '@type' => 'ViewAction',
-              name: 'Show build page',
-              target: [message.build_url]
-          }]
+          potentialAction: message.actions
         }), 
         :headers => {
             'Content-Type' => 'application/json', 

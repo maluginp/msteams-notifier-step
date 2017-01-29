@@ -21,7 +21,8 @@ module MSTeamsStep
     end  
 
     def text
-      "*Build  #{build_verb}: [##{env.build_number}](##{env.git_commit} by #{env.git_author} on #{env.git_branch})*  **Commit message:**  #{env.git_message}"
+      '*Build  #{build_verb}: [##{env.build_number}](##{env.git_commit} by #{env.git_author} on #{env.git_branch})*<br/>'\
+      '**Commit message:**\n #{env.git_message}'
     end
 
     def build_url
@@ -50,29 +51,45 @@ module MSTeamsStep
       env.build_successful? ? "succeeded" : "failed"
     end
 
-    def field_commit
+    def actions
+      acts = []
+
+      acts << field_build_page
+      acts << field_gitlab_page
+
+      git_commit.scan(/\#[a-zA-Z0-9\-]+/) { |match| acts << {
+        '@context' => 'https://schema.org',
+        '@type' => 'ViewAction',
+        name: 'Open issue: #{match}',
+        target: ["#{env.youtrack_url}#{match[1..-1]}"]
+      }}
+
+      acts
+    end
+
+    def field_youtrack_issues
+      
+    end
+
+    def field_gitlab_page
       {
-        title: "Commit",
-        value: env.git_message,
-        short: false,
+        '@context' => 'https://schema.org',
+        '@type' => 'ViewAction',
+        name: 'Show commit in Gitlab',
+        target: [env.gitlab_internal_url]
       }
     end
 
-    def field_jira
-      env.jira_task.nil? ? nil : {
-        title: "Task",
-        value: "[#{env.jira_task}](https://#{env.jira_domain}.atlassian.net/browse/#{env.jira_task})",
-        short: true,
+    def field_build_page
+      {
+          '@context' => 'https://schema.org',
+          '@type' => 'ViewAction',
+          name: 'Show build page',
+          target: [build_url]
       }
     end
 
-    def field_scheme
-      {
-        title: "Scheme",
-        value: env.xcode_scheme,
-        short: true,
-      }
-    end
+
 
   end
 

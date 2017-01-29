@@ -26,3 +26,15 @@ inputs:
       summary: The Microsoft Teams webhook URL to post the message to.
       is_expand: true
       is_required: true
+  - youtrack_url: $YOUTRACK_URL
+    opts:
+      title: YouTrack URL
+      summary: YouTrack URL
+      is_expand: true
+      is_required: false
+  - gitlab_url: $GITLAB_URL
+    opts:
+      title: GitLab URL
+      summary: GitLab URL
+      is_expand: true
+      is_required: false
