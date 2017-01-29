@@ -41,7 +41,7 @@ module MSTeamsStep
     end
 
     def git_author
-      nenv.git_clone_commit_commiter_name
+      "#{nenv.git_clone_commit_commiter_name} (#{nenv.git_clone_commit_commiter_email})"
     end
 
     def git_branch
