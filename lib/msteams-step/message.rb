@@ -43,14 +43,6 @@ module MSTeamsStep
       ].compact
     end
 
-    private
-
-    attr_reader :env
-
-    def build_verb
-      env.build_successful? ? "succeeded" : "failed"
-    end
-
     def actions
       acts = []
 
@@ -67,9 +59,15 @@ module MSTeamsStep
       acts
     end
 
-    def field_youtrack_issues
-      
+    private
+
+    attr_reader :env
+
+    def build_verb
+      env.build_successful? ? "succeeded" : "failed"
     end
+
+    
 
     def field_gitlab_page
       {
