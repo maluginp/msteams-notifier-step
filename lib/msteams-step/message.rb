@@ -49,7 +49,7 @@ module MSTeamsStep
       acts << field_build_page
       acts << field_gitlab_page
 
-      git_commit.scan(/\#[a-zA-Z0-9\-]+/) { |match| acts << {
+      env.git_message.scan(/\#[a-zA-Z0-9\-]+/) { |match| acts << {
         '@context' => 'https://schema.org',
         '@type' => 'ViewAction',
         name: 'Open issue: #{match}',
@@ -83,7 +83,7 @@ module MSTeamsStep
           '@context' => 'https://schema.org',
           '@type' => 'ViewAction',
           name: 'Show build page',
-          target: [build_url]
+          target: [env.build_url]
       }
     end
 
