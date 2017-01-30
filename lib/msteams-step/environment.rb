@@ -37,7 +37,7 @@ module MSTeamsStep
     end
 
     def git_message
-      nenv.git_clone_commit_message_subject
+      nenv.bitrise_git_message
     end
 
     def git_author
