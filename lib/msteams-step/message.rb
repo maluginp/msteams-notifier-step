@@ -61,7 +61,7 @@ module MSTeamsStep
 
     def issues
       str = ""
-      env.git_message.scan(/\#[a-zA-Z0-9\-]+/) { |match| str << "[Issue #{match}](#{env.youtrack_url}#{match[1..-1]})<br/>" }
+      env.git_message.scan(/\#[a-zA-Z0-9\-]+/m) { |match| str << "[Issue #{match}](#{env.youtrack_url}#{match[1..-1]})<br/>" }
       if str == ""
         str = "Issues not found"
       end
